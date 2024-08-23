@@ -8,6 +8,7 @@ WORKDIR /app
 
 COPY package*.json ./
 RUN npm install
+RUN npm install -g serve
 
 COPY . .
 
@@ -17,10 +18,6 @@ USER node
 
 RUN npm run build
 
-# RUN npm install -g serve
-
-# CMD ["serve", "-s", "build", "-l", "7860"]
-
-CMD ["npm", "start"]
+CMD ["serve", "-s", "build", "-l", "7860"]
 
 EXPOSE 7860
