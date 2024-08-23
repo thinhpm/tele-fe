@@ -1,0 +1,34 @@
+name: Deploy to Hugging Face
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Git
+      run: |
+        git config --global user.email "phamminhthinh9x@gmail.com"
+        git config --global user.name "thinhpm"
+
+    - name: Clone Hugging Face Space repository
+      env:
+        HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
+      run: |
+        git clone https://thinhpm:${{ secrets.HUGGINGFACE_TOKEN }}@huggingface.co/spaces/thinhpm/tele-fe hf-space
+        rsync -av --progress ./ hf-space/ --exclude .git --exclude Dockerfile --exclude README.md
+        cd hf-space
+        git branch
+        git add .
+        git commit -m "Deploying updated code from GitHub repository"
+        git push origin main
+
+
+        
