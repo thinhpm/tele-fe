@@ -17,8 +17,10 @@ USER node
 
 RUN npm run build
 
-RUN npm install -g serve
+# RUN npm install -g serve
 
-CMD ["serve", "-s", "build", "-l", "7860"]
+# CMD ["serve", "-s", "build", "-l", "7860"]
+
+CMD ["npm", "start"]
 
 EXPOSE 7860
